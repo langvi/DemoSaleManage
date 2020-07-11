@@ -113,8 +113,6 @@ public class EmployeeInfo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtCalamviec = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         txtID.setBackground(new java.awt.Color(204, 204, 204));
         txtID.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         txtID.setName("txtID"); // NOI18N

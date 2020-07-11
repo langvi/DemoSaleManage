@@ -589,7 +589,7 @@ public class HoaDon extends javax.swing.JPanel {
             for (int i = model.getRowCount() - 1; i >= 0; i--) {
                 model.removeRow(i);
             }
-            od.setOrder_ID(od.getOrder_ID() + 1);
+            od.setOrder_ID(hoaDonController.get_last_order_ID() + 1);
             maHoaDon_TextField.setText(Integer.toString(od.getOrder_ID()));
             order_product_list.clear();
             product_list.clear();

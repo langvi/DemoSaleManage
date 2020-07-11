@@ -16,8 +16,6 @@ import java.util.Date;
 
 public class HoaDonController {
 
-   
-
     public String fetchData(String query) {
         String data = "";
         try {
@@ -83,21 +81,21 @@ public class HoaDonController {
 
     public void store_order(int order_ID, String customer_phone_number, int employee_ID, ArrayList<Product> product_list, ArrayList<OrderProduct> order_product_list) {
         try {
-            PreparedStatement pstm = BaseApp.connectDB().prepareStatement("Insert into orders (customer_phone_number, employee_ID, order_create_at) values ( ?, ?, ?)");
-
-            pstm.setString(1, customer_phone_number);
-            pstm.setInt(2, employee_ID);
+            PreparedStatement pstm = BaseApp.connectDB().prepareStatement("Insert into orders (order_ID, customer_phone_number, employee_ID, order_create_at) values (?, ?, ?, ?)");
+            pstm.setInt(1, order_ID);
+            pstm.setString(2, customer_phone_number);
+            pstm.setInt(3, employee_ID);
             Date date = new Date();
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
             String dateString = formatter.format(date);
-            pstm.setString(3, dateString);
+            pstm.setString(4, dateString);
             pstm.execute();
 
             for (OrderProduct od_p : order_product_list) {
-                pstm = BaseApp.connectDB().prepareStatement("insert into order_product (product_ID, total_product) values ( ?, ?)");
-
-                pstm.setInt(1, od_p.getProduct_ID());
-                pstm.setInt(2, od_p.getTotal_product());
+                pstm = BaseApp.connectDB().prepareStatement("insert into order_product (order_ID, product_ID, total_product) values (?, ?, ?)");
+                pstm.setInt(1, order_ID);
+                pstm.setInt(2, od_p.getProduct_ID());
+                pstm.setInt(3, od_p.getTotal_product());
                 pstm.execute();
             }
 

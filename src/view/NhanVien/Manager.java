@@ -42,7 +42,6 @@ public class Manager extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         btnChange = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnExit = new javax.swing.JButton();
         btnSearch = new javax.swing.JButton();
 
         jLabel_TTNV.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -125,14 +124,6 @@ public class Manager extends javax.swing.JPanel {
             }
         });
 
-        btnExit.setText("Đóng");
-        btnExit.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
-            }
-        });
-
         btnSearch.setText("Tìm kiếm");
         btnSearch.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -162,9 +153,7 @@ public class Manager extends javax.swing.JPanel {
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(264, 264, 264))
+                .addGap(397, 397, 397))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,8 +173,7 @@ public class Manager extends javax.swing.JPanel {
                     .addComponent(btnChange)
                     .addComponent(btnNew)
                     .addComponent(btnDelete)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnExit))
+                    .addComponent(btnUpdate))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -221,16 +209,10 @@ public class Manager extends javax.swing.JPanel {
         dataEmployee.callData(queryData, tableEmployee);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_btnExitActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChange;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnUpdate;

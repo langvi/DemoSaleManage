@@ -8,7 +8,6 @@ public class Manage_Sales {
         Login login = new Login();
         login.setVisible(true);
         login.setResizable(false);
-        System.out.println("Ok");
 
     }
 

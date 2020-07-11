@@ -56,10 +56,13 @@ public class Home extends javax.swing.JFrame {
         btnLogOut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1310, 800));
 
         PanelHome.setPreferredSize(new java.awt.Dimension(1000, 800));
+        PanelHome.setLayout(new java.awt.BorderLayout());
 
         TabbedPaneHome.setToolTipText("");
+        PanelHome.add(TabbedPaneHome, java.awt.BorderLayout.CENTER);
 
         btnLogOut.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnLogOut.setText("ĐĂNG XUẤT");
@@ -74,7 +77,7 @@ public class Home extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 1193, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnLogOut))
         );
         jPanel2Layout.setVerticalGroup(
@@ -84,20 +87,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(0, 11, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout PanelHomeLayout = new javax.swing.GroupLayout(PanelHome);
-        PanelHome.setLayout(PanelHomeLayout);
-        PanelHomeLayout.setHorizontalGroup(
-            PanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(TabbedPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 1310, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        PanelHomeLayout.setVerticalGroup(
-            PanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelHomeLayout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(TabbedPaneHome, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        PanelHome.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

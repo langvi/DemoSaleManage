@@ -389,7 +389,6 @@ public class Employee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCalamviecActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnClose;
     private javax.swing.JButton BtnSave;

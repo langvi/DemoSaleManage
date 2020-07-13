@@ -9,7 +9,7 @@ import model.Customer;
 public class ThemKhachHang extends javax.swing.JFrame {
 
     // Câu lệnh truy vấn vào cơ sở dữ liệu MySQL
-    String insertQuery = "insert into customer(phone_number, customer_name, customer_sex, year_of_birth, address, create_at)"
+    String insertQuery = "insert into customer(customer_phone_number, customer_name, customer_sex, customer_birth, customer_address, customer_create_at)"
             + "values(?,?,?,?,?,?) ";
     Customer addCustomer;
     KhachHangController controller;

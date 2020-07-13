@@ -135,6 +135,11 @@ public class HangHoa extends javax.swing.JPanel {
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 51, 0));
         jButton4.setText("Xóa sản phẩm");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         text_search.setForeground(new java.awt.Color(102, 102, 102));
         text_search.setText("Tìm kiếm sản phẩm theo tên sản phẩm");
@@ -224,6 +229,10 @@ public class HangHoa extends javax.swing.JPanel {
     private void text_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_text_searchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_text_searchActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

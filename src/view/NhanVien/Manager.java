@@ -11,13 +11,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class NewManager extends javax.swing.JPanel {
+public class Manager extends javax.swing.JPanel {
     EmployeeController dataEmployee;
     String queryData = "SELECT * FROM employee";
     /**
      * Creates new form NewManager
      */
-    public NewManager() {
+    public Manager() {
         dataEmployee = new EmployeeController();
         initComponents();
         // do du lieu vao bang

@@ -399,7 +399,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         // TODO add your handling code here:
         int numberaddrow;
-        
+
         EmployeeController model = new EmployeeController();
         Employee employee = new Employee();
         String query;
@@ -411,18 +411,18 @@ public class EmployeeInfo extends javax.swing.JFrame {
         employee.setBasicSalary(Float.parseFloat(txtLuongcoban.getText()));
         employee.setWorkTime(cbCaLamViec.getItemAt(cbCaLamViec.getSelectedIndex()));
         if (Integer.parseInt(txtID.getText()) == model.getLastEmpID()) {
-            query = "insert into employee(user_ID, employee_name, employee_birth,"
-                    + "employee_phone_number, employee_address, employee_salary,"
-                    + "employee_work_time, employee_work_day, employee_state) values(?, ?, ?, ?, ?, ?, ?, ?, 1);";
+            query = "insert into employee( employee_name, employee_birth,"
+            + "employee_phone_number, employee_address, employee_salary,"
+            + "employee_work_time, employee_work_day, employee_state) values( ?, ?, ?, ?, ?, ?, ?, 1);";
             employee.setUserID(model.getLastUserID());
             employee.setNumberWorkDay(0);
         } else {
             employee.setNumberWorkDay(Integer.parseInt(txtSoca.getText()));
             employee.setUserID(model.getUserID(Integer.parseInt(txtID.getText())));
             employee.setId(Integer.parseInt(txtID.getText()));
-            query = "update employee set user_ID = ?, employee_name = ?, employee_birth = ?,"
-                    + "employee_phone_number = ?, employee_address = ?, employee_salary = ?,"
-                    + "employee_work_time = ?, employee_work_day = ? where employee_ID = ?;";
+            query = "update employee  employee_name = ?, employee_birth = ?,"
+            + "employee_phone_number = ?, employee_address = ?, employee_salary = ?,"
+            + "employee_work_time = ?, employee_work_day = ? where employee_ID = ?;";
         }
         numberaddrow = model.AddEmployee(query, employee);
         if (numberaddrow > 0 && base.BaseApp.permission == 1) {
@@ -438,7 +438,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (base.BaseApp.permission == 1) {
             this.dispose();
-            NewManager mg = new NewManager();
+            Manager mg = new Manager();
             mg.setVisible(true);
         } else {
             

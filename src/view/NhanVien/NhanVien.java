@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class NewNhanVien extends javax.swing.JPanel {
+public class NhanVien extends javax.swing.JPanel {
 
     EmployeeController dataEmployee;
     String queryData = "SELECT employee_ID, employee_name, employee_birth,"
@@ -24,7 +24,7 @@ public class NewNhanVien extends javax.swing.JPanel {
     /**
      * Creates new form NewNhanVien
      */
-    public NewNhanVien(int userID) {
+    public NhanVien(int userID) {
         initComponents();
         loadEmpInfo(userID);
     }

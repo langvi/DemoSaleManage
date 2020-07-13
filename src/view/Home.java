@@ -5,16 +5,16 @@ import javax.swing.JOptionPane;
 import view.hoaDon.HoaDon;
 import view.khachHang.KhachHang;
 import view.hangHoa.HangHoa;
-import view.NhanVien.NewManager;
-import view.NhanVien.NewNhanVien;
+import view.NhanVien.Manager;
+import view.NhanVien.NhanVien;
 import view.thongKe.ThongKe;
 
 public class Home extends javax.swing.JFrame {
 
     HangHoa khoHang;
     KhachHang khachHang;
-    NewNhanVien newEmployee;
-    NewManager newManager;
+    NhanVien newEmployee;
+    Manager newManager;
     HoaDon hoaDon;
     ThongKe newThongKe;
 
@@ -23,8 +23,8 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         khoHang = new HangHoa();
         khachHang = new KhachHang();
-        newEmployee = new NewNhanVien(BaseApp.userID);
-        newManager = new NewManager();
+        newEmployee = new NhanVien(BaseApp.userID);
+        newManager = new Manager();
 
         hoaDon = new HoaDon();
         newThongKe = new ThongKe();

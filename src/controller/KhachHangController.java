@@ -97,7 +97,7 @@ public class KhachHangController {
 
     public void AddDatabase(String query, Customer customer) {
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(date);
         try {
             PreparedStatement pst = BaseApp.connectDB().prepareStatement(query);

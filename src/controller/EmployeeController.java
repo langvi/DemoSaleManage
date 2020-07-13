@@ -136,29 +136,29 @@ public class EmployeeController {
         }
     }
 
-    // Thêm dữ liệu nhân viên vào database
+     // Thêm dữ liệu nhân viên vào database
     public int AddEmployee(String query, Employee employee) {
         // query: insert into sales_database.employee(employee_ID, user_ID,
         // employee_employee_name, employee_birth, employee_employee_phone_number, employee_employee_address,
         // employee_employee_salary, employee_work_time, employee_work_day
-        int chk = 0;
+        int check = 0;
         try {
             PreparedStatement pst = conn.prepareStatement(query);
-            pst.setInt(1, employee.getId());
-            pst.setString(2, employee.getName());
-            String strdate = employee.getBirthday();
-            Date date1 = convertStringToDate(strdate, "dd/MM/yyyy");
-            pst.setDate(3, date1);
-            pst.setString(4, employee.getPhoneNumber());
-            pst.setString(5, employee.getAddress());
-            pst.setFloat(6, employee.getBasicSalary());
-            pst.setString(7, employee.getWorkTime());
-            pst.setInt(8, employee.getNumberWorkDay());
-            chk = pst.executeUpdate();
+            pst.setString(1, employee.getName());
+            pst.setDate(2, Date.valueOf(employee.getBirthday()));
+            pst.setString(3, employee.getPhoneNumber());
+            pst.setString(4, employee.getAddress());
+            pst.setFloat(5, employee.getBasicSalary());
+            pst.setString(6, employee.getWorkTime());
+            pst.setInt(7, employee.getNumberWorkDay());
+            if(employee.getUserID()!= getLastUserID()){
+                pst.setInt(8, employee.getId());
+            }
+            check = pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return chk;
+        return check;
     }
     
     public void callSearchData(String query, JTable table, String name, String phone) {

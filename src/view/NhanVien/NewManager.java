@@ -258,7 +258,6 @@ public class NewManager extends javax.swing.JPanel {
         EmployeeController model = new EmployeeController();
         int user_ID = model.getUserID(Integer.parseInt(IDrow));
         EmployeeInfo ChangeEmployee = new EmployeeInfo(user_ID);
-//        this.dispose();
         ChangeEmployee.setVisible(true);
        
     }//GEN-LAST:event_btnChangeActionPerformed
@@ -270,7 +269,7 @@ public class NewManager extends javax.swing.JPanel {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+//        System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void txtSDTTimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSDTTimMouseClicked

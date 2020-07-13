@@ -1,7 +1,6 @@
 package view;
 
 import base.BaseApp;
-import controller.EmployeeController;
 import javax.swing.JOptionPane;
 import view.hoaDon.HoaDon;
 import view.khachHang.KhachHang;

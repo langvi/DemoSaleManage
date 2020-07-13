@@ -71,7 +71,7 @@ public class EmployeeController {
             int numberDay = list.get(i).getNumberWorkDay();
             data[7] = Integer.toString(numberDay);
             float Salary = list.get(i).computeSalary(numberDay, basicSalary);
-            data[8] = Float.toString(Salary);
+            data[8] = BaseApp.formatMoney(Salary);
             tableModel.addRow(data);
         }
         table.setModel(tableModel);

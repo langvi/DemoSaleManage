@@ -6,12 +6,15 @@
 package view.NhanVien;
 
 import base.BaseApp;
+import model.Employee;
 import controller.EmployeeController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import model.EmployeeClass;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,54 +32,68 @@ public class EmployeeInfo extends javax.swing.JFrame {
         initComponents();
         txtID.setText("");
         txtName.setText("");
+        txtDate.setText("");
         txtPhone.setText("");
         txtAddress.setText("");
-        txtCalamviec.setText("");
         txtLuongcoban.setText("");
-        txtSoca.setText("");
-        txtLuong.setText(null);
+        txtCaLamViec.setText("");
+        txtCaLamViec.setEditable(false);
+        txtSoca.setText("0");
+        txtSoca.setEditable(false);
+        txtLuong.setText("0");
+        txtLuong.setEditable(false);
+
+        EmployeeController model = new EmployeeController();
+        int empIDInit = model.getLastEmpID();
+        txtID.setText(Integer.toString(empIDInit));
+        txtID.setEditable(false);
 
     }
 
     public EmployeeInfo(int userID) {
         initComponents();
-        BtnSave.disable();
         loadEmpInfo(userID);
     }
 
     private void loadEmpInfo(int userID) {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
+        //connect to database
+        Connection conn = BaseApp.connectDB();
         try {
-            String sql = "select * from tuanvu.employee where user_ID = user_ID";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(2, userID);
+            String sql = "select * from employee where user_ID = ?;";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userID);
 
-            rs = pstmt.executeQuery();
-            EmployeeClass emp = new EmployeeClass();
+            ResultSet rs = pstmt.executeQuery();
+            model.Employee emp = new model.Employee();
             if (rs.next()) {
                 txtID.setText(Integer.toString(rs.getInt("employee_ID")));
-                txtID.disable();
+                txtID.setEditable(false);
                 txtName.setText(rs.getString("employee_name"));
-                txtName.disable();
                 txtDate.setText(rs.getString("employee_birth"));
-                txtDate.disable();
                 txtPhone.setText(rs.getString("employee_phone_number"));
-                txtPhone.disable();
                 txtAddress.setText(rs.getString("employee_address"));
-                txtAddress.disable();
-                txtCalamviec.setText(rs.getString("employee_work_time"));
-                txtCalamviec.disable();
+                txtCaLamViec.setText(rs.getString("employee_work_time"));
+                txtCaLamViec.setEditable(false);
                 txtLuongcoban.setText(Float.toString(rs.getFloat("employee_salary")));
-                txtLuongcoban.disable();
                 txtSoca.setText(Integer.toString(rs.getInt("employee_work_day")));
-                txtSoca.disable();
                 txtLuong.setText(Float.toString(emp.computeSalary(rs.getInt("employee_work_day"),
                         rs.getInt("employee_work_day"))));
-                txtLuong.disable();
+            }
+            if (base.BaseApp.permission == 0) {
+                offEditable();
             }
         } catch (SQLException e) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+    private void offEditable() {
+        txtName.setEditable(false);
+        txtDate.setEditable(false);
+        txtAddress.setEditable(false);
+        txtPhone.setEditable(false);
+        txtLuongcoban.setEditable(false);
+        txtSoca.setEditable(false);
+        txtLuong.setEditable(false);
     }
 
     /**
@@ -88,80 +105,32 @@ public class EmployeeInfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtID = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        txtLuongcoban = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        txtPhone = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        txtDate = new javax.swing.JTextField();
         txtLuong = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        txtAddress = new javax.swing.JTextField();
-        txtSoca = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         BtnSave = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
         BtnClose = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtCalamviec = new javax.swing.JTextField();
-
-        txtID.setBackground(new java.awt.Color(204, 204, 204));
-        txtID.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        txtID.setName("txtID"); // NOI18N
-        txtID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDActionPerformed(evt);
-            }
-        });
-
-        jLabel11.setText("Ca làm việc");
-
-        txtName.setBackground(new java.awt.Color(204, 204, 204));
-        txtName.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
-
-        txtLuongcoban.setBackground(new java.awt.Color(204, 204, 204));
-        txtLuongcoban.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        txtLuongcoban.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLuongcobanActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setText("Số điện thoại");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel12.setText("/ 1 giờ");
-
-        txtPhone.setBackground(new java.awt.Color(204, 204, 204));
-        txtPhone.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        txtPhone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPhoneActionPerformed(evt);
-            }
-        });
-
-        jLabel13.setText("Mức lương cơ bản");
-
-        txtDate.setBackground(new java.awt.Color(204, 204, 204));
-        txtDate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        txtDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDateActionPerformed(evt);
-            }
-        });
+        jLabel11 = new javax.swing.JLabel();
+        cbCaLamViec = new javax.swing.JComboBox<>();
+        txtName = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        txtLuongcoban = new javax.swing.JTextField();
+        txtCaLamViec = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtPhone = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtAddress = new javax.swing.JTextField();
+        txtDate = new javax.swing.JTextField();
+        txtSoca = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         txtLuong.setBackground(new java.awt.Color(204, 204, 204));
         txtLuong.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -172,26 +141,6 @@ public class EmployeeInfo extends javax.swing.JFrame {
         });
 
         jLabel6.setText("Địa chỉ");
-
-        jLabel14.setText("Số ca làm việc");
-
-        txtAddress.setBackground(new java.awt.Color(204, 204, 204));
-        txtAddress.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        txtAddress.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAddressActionPerformed(evt);
-            }
-        });
-
-        txtSoca.setBackground(new java.awt.Color(204, 204, 204));
-        txtSoca.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        txtSoca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSocaActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Ngày sinh");
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setText("VND");
@@ -214,6 +163,15 @@ public class EmployeeInfo extends javax.swing.JFrame {
 
         jLabel9.setText("Tổng lương");
 
+        txtID.setBackground(new java.awt.Color(204, 204, 204));
+        txtID.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txtID.setName("txtID"); // NOI18N
+        txtID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDActionPerformed(evt);
+            }
+        });
+
         BtnClose.setText("Đóng");
         BtnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,13 +181,83 @@ public class EmployeeInfo extends javax.swing.JFrame {
 
         jLabel3.setText("Tên nhân viên");
 
-        txtCalamviec.setBackground(new java.awt.Color(204, 204, 204));
-        txtCalamviec.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        txtCalamviec.addActionListener(new java.awt.event.ActionListener() {
+        jLabel11.setText("Ca làm việc");
+
+        cbCaLamViec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "8h - 13h", "13h - 18h", "18h - 23h" }));
+        cbCaLamViec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCalamviecActionPerformed(evt);
+                cbCaLamViecActionPerformed(evt);
             }
         });
+
+        txtName.setBackground(new java.awt.Color(204, 204, 204));
+        txtName.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("Chọn ca làm");
+
+        txtLuongcoban.setBackground(new java.awt.Color(204, 204, 204));
+        txtLuongcoban.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txtLuongcoban.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLuongcobanActionPerformed(evt);
+            }
+        });
+
+        txtCaLamViec.setBackground(new java.awt.Color(204, 204, 204));
+        txtCaLamViec.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txtCaLamViec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCaLamViecActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Số điện thoại");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel12.setText("/ 1 ca");
+
+        txtPhone.setBackground(new java.awt.Color(204, 204, 204));
+        txtPhone.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txtPhone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPhoneActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("Số ca làm việc");
+
+        jLabel13.setText("Mức lương cơ bản");
+
+        txtAddress.setBackground(new java.awt.Color(204, 204, 204));
+        txtAddress.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txtAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAddressActionPerformed(evt);
+            }
+        });
+
+        txtDate.setBackground(new java.awt.Color(204, 204, 204));
+        txtDate.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txtDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDateActionPerformed(evt);
+            }
+        });
+
+        txtSoca.setBackground(new java.awt.Color(204, 204, 204));
+        txtSoca.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        txtSoca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSocaActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Ngày sinh");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -245,39 +273,28 @@ public class EmployeeInfo extends javax.swing.JFrame {
                             .addGap(25, 25, 25)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(14, 14, 14)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txtLuongcoban, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                                        .addComponent(txtCalamviec))
+                                        .addComponent(cbCaLamViec, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtSoca, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(txtLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(txtID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(0, 0, Short.MAX_VALUE))
+                                            .addGap(123, 123, 123)
+                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(txtSoca, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -291,13 +308,28 @@ public class EmployeeInfo extends javax.swing.JFrame {
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(txtID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtCaLamViec, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(198, 198, 198)
                         .addComponent(BtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(154, 154, 154)
                         .addComponent(BtnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,28 +345,33 @@ public class EmployeeInfo extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCaLamViec, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCalamviec, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSoca, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSoca, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCaLamViec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,16 +385,68 @@ public class EmployeeInfo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnSave)
                     .addComponent(BtnClose))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLuongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLuongActionPerformed
+
+    private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
+        // TODO add your handling code here:
+        int numberaddrow;
+
+        EmployeeController model = new EmployeeController();
+        Employee employee = new Employee();
+        String query;
+        // TH them nhan vien moi
+        employee.setName(txtName.getText());
+        employee.setBirthday(txtDate.getText());
+        employee.setPhoneNumber(txtPhone.getText());
+        employee.setAddress(txtAddress.getText());
+        employee.setBasicSalary(Float.parseFloat(txtLuongcoban.getText()));
+        employee.setWorkTime(cbCaLamViec.getItemAt(cbCaLamViec.getSelectedIndex()));
+        if (Integer.parseInt(txtID.getText()) == model.getLastEmpID()) {
+            query = "insert into employee(user_ID, employee_name, employee_birth,"
+            + "employee_phone_number, employee_address, employee_salary,"
+            + "employee_work_time, employee_work_day, employee_state) values(?, ?, ?, ?, ?, ?, ?, ?, 1);";
+            employee.setUserID(model.getLastUserID());
+            employee.setNumberWorkDay(0);
+        } else {
+            employee.setNumberWorkDay(Integer.parseInt(txtSoca.getText()));
+            employee.setUserID(model.getUserID(Integer.parseInt(txtID.getText())));
+            employee.setId(Integer.parseInt(txtID.getText()));
+            query = "update employee set user_ID = ?, employee_name = ?, employee_birth = ?,"
+            + "employee_phone_number = ?, employee_address = ?, employee_salary = ?,"
+            + "employee_work_time = ?, employee_work_day = ? where employee_ID = ?;";
+        }
+        numberaddrow = model.AddEmployee(query, employee);
+        if (numberaddrow > 0 && base.BaseApp.permission == 1) {
+            JOptionPane.showMessageDialog(this, "Cap nhat thanh cong");
+        }
+    }//GEN-LAST:event_BtnSaveActionPerformed
+
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_txtIDActionPerformed
+
+    private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseActionPerformed
+        // TODO add your handling code here:
+        if(base.BaseApp.permission == 1){
+            this.dispose();
+            NewManager mg = new NewManager();
+            mg.setVisible(true);
+        }else {
+
+        }
+    }//GEN-LAST:event_BtnCloseActionPerformed
+
+    private void cbCaLamViecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCaLamViecActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCaLamViecActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
@@ -367,50 +456,25 @@ public class EmployeeInfo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLuongcobanActionPerformed
 
+    private void txtCaLamViecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCaLamViecActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCaLamViecActionPerformed
+
     private void txtPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPhoneActionPerformed
-
-    private void txtDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDateActionPerformed
-
-    private void txtLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLuongActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLuongActionPerformed
 
     private void txtAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddressActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAddressActionPerformed
 
+    private void txtDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDateActionPerformed
+
     private void txtSocaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSocaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSocaActionPerformed
-
-    private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
-        // TODO add your handling code here:
-        String query = "insert into tuanvu.employee(employee_ID,"
-                + "employee_name, employee_birth, employee_phone_number"
-                + "employee_address, employee_salary, employee_work_time"
-                + "employee_work_day) values(?, ?, ?, ?, ?, ?, ?, ?, 0)";
-        EmployeeController model = new EmployeeController();
-        EmployeeClass employee = new EmployeeClass();
-        employee.setName(txtName.getText());
-
-//        employee.setBirthday(txtDate.getText());
-        model.AddEmployee(query, employee);
-
-    }//GEN-LAST:event_BtnSaveActionPerformed
-
-    private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseActionPerformed
-        // TODO add your handling code here:
-//        System.exit(0);
-        dispose();
-    }//GEN-LAST:event_BtnCloseActionPerformed
-
-    private void txtCalamviecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCalamviecActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCalamviecActionPerformed
 
     /**
      * @param args the command line arguments
@@ -453,12 +517,14 @@ public class EmployeeInfo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnClose;
     private javax.swing.JButton BtnSave;
+    private javax.swing.JComboBox<String> cbCaLamViec;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -467,7 +533,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField txtAddress;
-    private javax.swing.JTextField txtCalamviec;
+    private javax.swing.JTextField txtCaLamViec;
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtLuong;

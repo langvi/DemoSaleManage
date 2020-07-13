@@ -15,11 +15,12 @@ public class BaseApp {
     public static int permission;
     public static final String path = "src/infor.txt";
     public static String userName = "";
+    public static int userID = 0;
 
     public static final Connection connectDB() {
         Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/sales_database?autoReconnect=true&useSSL=false",
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/sales_database",
                     "root", "");
             return conn;
         } catch (SQLException ex) {

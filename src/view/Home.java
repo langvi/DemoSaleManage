@@ -1,38 +1,33 @@
 package view;
 
 import base.BaseApp;
+import controller.EmployeeController;
 import javax.swing.JOptionPane;
 import view.hoaDon.HoaDon;
 import view.khachHang.KhachHang;
 import view.hangHoa.HangHoa;
-import view.NhanVien.Manager;
-import view.NhanVien.NhanVien;
+import view.NhanVien.NewManager;
+import view.NhanVien.NewNhanVien;
 import view.thongKe.ThongKe;
 
 public class Home extends javax.swing.JFrame {
-    
+
     HangHoa khoHang;
     KhachHang khachHang;
-//    NhanVien nhanVien;
-//    Schedule schedule;
-    NhanVien newEmployee;
-    Manager newManager;
+    NewNhanVien newEmployee;
+    NewManager newManager;
     HoaDon hoaDon;
-//    ThongKe thongKe;
     ThongKe newThongKe;
-    
+
     public Home() {
         super.setTitle("QUẢN LÍ BÁN HÀNG");
         initComponents();
         khoHang = new HangHoa();
         khachHang = new KhachHang();
-        newEmployee = new NhanVien();
-        newManager = new Manager();
-//        nhanVien = new NhanVien();
-//        schedule = new Schedule();
+        newEmployee = new NewNhanVien(BaseApp.userID);
+        newManager = new NewManager();
 
         hoaDon = new HoaDon();
-//        thongKe = new ThongKe();
         newThongKe = new ThongKe();
         TabbedPaneHome.addTab("Kho hàng", khoHang);
         TabbedPaneHome.addTab("Khách hàng", khachHang);
@@ -40,12 +35,12 @@ public class Home extends javax.swing.JFrame {
             TabbedPaneHome.addTab("Nhân viên", newManager);
         } else {
             TabbedPaneHome.addTab("Nhân viên", newEmployee);
-            
+
         }
         TabbedPaneHome.addTab("Hóa đơn", hoaDon);
         TabbedPaneHome.addTab("Thống kê", newThongKe);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

@@ -16,6 +16,8 @@ import java.util.Date;
 
 public class HoaDonController {
 
+   
+
     public String fetchData(String query) {
         String data = "";
         try {

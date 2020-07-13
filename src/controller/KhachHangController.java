@@ -108,7 +108,7 @@ public class KhachHangController {
             pst.setString(5, customer.getCustomer_address());
             pst.setString(6, dateString);
             pst.execute();
-            JOptionPane.showMessageDialog(null, " Đã thêm thành công", "Thông báo", 1);
+            JOptionPane.showMessageDialog(null, " Đã thêmm thành công", "Thông báo", 1);
 
         } catch (SQLException ex) {
             Logger.getLogger(KhachHangController.class.getName()).log(Level.SEVERE, null, ex);

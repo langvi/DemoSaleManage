@@ -160,6 +160,7 @@ public class Login extends javax.swing.JFrame {
                     loginController.savePassword(BaseApp.path, txtUserName.getText().trim(), txtPassword.getText().trim());
                 }
                 BaseApp.userName = txtUserName.getText().trim();
+                BaseApp.userID = loginController.getUserID(txtUserName.getText());
                 new Home().setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không đúng");

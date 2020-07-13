@@ -124,4 +124,20 @@ public class LoginController {
         }
         return false;
     }
+
+    public int getUserID(String userName) {
+        String query = "SELECT user_ID FROM user WHERE user_name = '" + userName + "'";
+        int id = 0;
+        Statement stm;
+        try {
+            stm = BaseApp.connectDB().createStatement();
+            ResultSet result = stm.executeQuery(query);
+            result.first();
+            id = result.getInt("user_ID");
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
+    }
 }

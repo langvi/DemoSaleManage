@@ -20,7 +20,7 @@ public class BaseApp {
     public static final Connection connectDB() {
         Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/sales_database",
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/tuanvu",
                     "root", "");
             return conn;
         } catch (SQLException ex) {

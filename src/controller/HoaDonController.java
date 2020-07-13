@@ -88,7 +88,7 @@ public class HoaDonController {
             pstm.setString(2, customer_phone_number);
             pstm.setInt(3, employee_ID);
             Date date = new Date();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String dateString = formatter.format(date);
             pstm.setString(4, dateString);
             pstm.execute();
@@ -100,7 +100,6 @@ public class HoaDonController {
                 pstm.setInt(3, od_p.getTotal_product());
                 pstm.execute();
             }
-
             pstm.close();
         } catch (SQLException ex) {
             Logger.getLogger(HoaDonController.class.getName()).log(Level.SEVERE, null, ex);

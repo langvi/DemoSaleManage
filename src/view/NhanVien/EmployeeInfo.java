@@ -27,7 +27,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
      */
     //connect to database
     Connection conn = BaseApp.connectDB();
-
+    
     public EmployeeInfo() {
         initComponents();
         txtID.setText("");
@@ -42,19 +42,19 @@ public class EmployeeInfo extends javax.swing.JFrame {
         txtSoca.setEditable(false);
         txtLuong.setText("0");
         txtLuong.setEditable(false);
-
+        
         EmployeeController model = new EmployeeController();
         int empIDInit = model.getLastEmpID();
         txtID.setText(Integer.toString(empIDInit));
         txtID.setEditable(false);
-
+        
     }
-
+    
     public EmployeeInfo(int userID) {
         initComponents();
         loadEmpInfo(userID);
     }
-
+    
     private void loadEmpInfo(int userID) {
         //connect to database
         Connection conn = BaseApp.connectDB();
@@ -62,7 +62,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
             String sql = "select * from employee where user_ID = ?;";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, userID);
-
+            
             ResultSet rs = pstmt.executeQuery();
             model.Employee emp = new model.Employee();
             if (rs.next()) {
@@ -76,7 +76,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
                 txtCaLamViec.setEditable(false);
                 txtLuongcoban.setText(Float.toString(rs.getFloat("employee_salary")));
                 txtSoca.setText(Integer.toString(rs.getInt("employee_work_day")));
-                txtLuong.setText(Float.toString(emp.computeSalary(rs.getInt("employee_work_day"),
+                txtLuong.setText(BaseApp.formatMoney(emp.computeSalary(rs.getInt("employee_salary"),
                         rs.getInt("employee_work_day"))));
             }
             if (base.BaseApp.permission == 0) {
@@ -86,6 +86,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
             Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+
     private void offEditable() {
         txtName.setEditable(false);
         txtDate.setEditable(false);
@@ -398,7 +399,7 @@ public class EmployeeInfo extends javax.swing.JFrame {
     private void BtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnSaveActionPerformed
         // TODO add your handling code here:
         int numberaddrow;
-
+        
         EmployeeController model = new EmployeeController();
         Employee employee = new Employee();
         String query;
@@ -411,8 +412,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
         employee.setWorkTime(cbCaLamViec.getItemAt(cbCaLamViec.getSelectedIndex()));
         if (Integer.parseInt(txtID.getText()) == model.getLastEmpID()) {
             query = "insert into employee(user_ID, employee_name, employee_birth,"
-            + "employee_phone_number, employee_address, employee_salary,"
-            + "employee_work_time, employee_work_day, employee_state) values(?, ?, ?, ?, ?, ?, ?, ?, 1);";
+                    + "employee_phone_number, employee_address, employee_salary,"
+                    + "employee_work_time, employee_work_day, employee_state) values(?, ?, ?, ?, ?, ?, ?, ?, 1);";
             employee.setUserID(model.getLastUserID());
             employee.setNumberWorkDay(0);
         } else {
@@ -420,8 +421,8 @@ public class EmployeeInfo extends javax.swing.JFrame {
             employee.setUserID(model.getUserID(Integer.parseInt(txtID.getText())));
             employee.setId(Integer.parseInt(txtID.getText()));
             query = "update employee set user_ID = ?, employee_name = ?, employee_birth = ?,"
-            + "employee_phone_number = ?, employee_address = ?, employee_salary = ?,"
-            + "employee_work_time = ?, employee_work_day = ? where employee_ID = ?;";
+                    + "employee_phone_number = ?, employee_address = ?, employee_salary = ?,"
+                    + "employee_work_time = ?, employee_work_day = ? where employee_ID = ?;";
         }
         numberaddrow = model.AddEmployee(query, employee);
         if (numberaddrow > 0 && base.BaseApp.permission == 1) {
@@ -435,12 +436,12 @@ public class EmployeeInfo extends javax.swing.JFrame {
 
     private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseActionPerformed
         // TODO add your handling code here:
-        if(base.BaseApp.permission == 1){
+        if (base.BaseApp.permission == 1) {
             this.dispose();
             NewManager mg = new NewManager();
             mg.setVisible(true);
-        }else {
-
+        } else {
+            
         }
     }//GEN-LAST:event_BtnCloseActionPerformed
 

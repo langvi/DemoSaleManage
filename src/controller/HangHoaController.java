@@ -60,16 +60,16 @@ public class HangHoaController {
 
     public void add_info_product_db(Product base_product) {
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(date);
         try {
             Statement st = BaseApp.connectDB().createStatement();
             String query = "INSERT INTO product(product_name, "
-                    + "product_category,product_retail_price, entry_price, product_number, note, create_at) "
+                    + "product_category,product_retail_price, product_entry_price, product_number, product_create_at) "
                     + "VALUES ('" + base_product.getName() + "','" + base_product.getCategory() + "',"
                     + base_product.getRetail_price() + "," + base_product.getEntry_price()
-                    + "," + base_product.getProduct_number() + ","
-                    + "'" + base_product.getNote() + "'," + "'" + dateString + "')";
+                    + "," + base_product.getProduct_number() + ",'"
+                    + dateString + "')";
             st.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(HangHoaController.class.getName()).log(Level.SEVERE, null, ex);

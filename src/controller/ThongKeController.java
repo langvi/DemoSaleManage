@@ -43,14 +43,13 @@ public class ThongKeController {
         ArrayList<Integer> list_order = new ArrayList<Integer>();
         ArrayList<Integer> list_product = new ArrayList<Integer>();
         try {
-            Statement pst = conn.createStatement();
+            Statement pst = BaseApp.connectDB().createStatement();
             ResultSet rs = pst.executeQuery(query);
             while (rs.next()) {
                 productProperties order = new productProperties();
                 order.setOrder_ID(rs.getInt("order_ID"));
                 list_order.add(order.getOrder_ID());
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(ThongKeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,7 +63,7 @@ public class ThongKeController {
         }
         String query_unique_product_ID = "select distinct product_ID FROM order_product where order_ID in " + "(" + str + ");";
         try {
-            Statement pst_1 = conn.createStatement();
+            Statement pst_1 = BaseApp.connectDB().createStatement();
             ResultSet rs_1 = pst_1.executeQuery(query_unique_product_ID);
             while (rs_1.next()) {
                 productProperties product_ID = new productProperties();
@@ -86,7 +85,7 @@ public class ThongKeController {
         for (int i = 0; i < list_product.size(); i++) {
             String product_number = "select total_product FROM order_product where order_ID in " + "(" + str + ") and product_ID =" + list_product.get(i) + ";";
             try {
-                Statement pst_2 = conn.createStatement();
+                Statement pst_2 = BaseApp.connectDB().createStatement();
                 ResultSet rs_2 = pst_2.executeQuery(product_number);
                 int total = 0;
                 while (rs_2.next()) {
@@ -104,27 +103,27 @@ public class ThongKeController {
         String get_product = "SELECT product_ID,product_name,product_category ,product_entry_price,"
                 + " product_retail_price FROM product where product_ID in (" + str_1 + ")";
         try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(get_product);
+            Statement st_3 = BaseApp.connectDB().createStatement();
+            ResultSet rs_3 = st_3.executeQuery(get_product);
             int i = 0;
-            while (rs.next()) {
+            while (rs_3.next()) {
+
                 productProperties product = new productProperties();
-                product.setProduct_code(rs.getInt("productID"));
-                product.setName(rs.getString("product_name"));
-                product.setCategory(rs.getString("product_category"));
-                product.setProduct_number(rs.getInt("product_entry_price"));
-                product.setRetail_price(rs.getInt("product_retail_price"));
+                product.setProduct_code(rs_3.getInt("product_ID"));
+                product.setName(rs_3.getString("product_name"));
+                product.setCategory(rs_3.getString("product_category"));
+                product.setProduct_number(rs_3.getInt("product_entry_price"));
+                product.setRetail_price(rs_3.getInt("product_retail_price"));
                 total_Product += data[i];
                 list.add(product);
-                total_Money_in += rs.getInt("product_retail_price") * data[i];
-                total_Money_out += rs.getInt("product_entry_price") * data[i];
+                total_Money_in += rs_3.getInt("product_retail_price") * data[i];
+                total_Money_out += rs_3.getInt("product_entry_price") * data[i];
                 i++;
             }
             total_Profit = total_Money_in - total_Money_out;
             product_label.setText(Integer.toString(total_Product) + " Sản Phẩm");
-            System.out.println("hahaha");
-            money_label.setText(Integer.toString(total_Money_in) + " VNĐ");
-            profit_label.setText(Integer.toString(total_Profit) + " VNĐ");
+            money_label.setText(BaseApp.formatMoney(total_Money_in) + " VNĐ");
+            profit_label.setText(BaseApp.formatMoney(total_Profit) + " VNĐ");
         } catch (SQLException ex) {
             Logger.getLogger(ThongKeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -136,10 +135,22 @@ public class ThongKeController {
             data_table[3] = Integer.toString(data[i]);
             tableModel.addRow(data_table);
         }
-//        System.out.println(data.g);
         table.setModel(tableModel);
         tableModel.fireTableDataChanged();
     }
-//    
-//    public void getProduct()
+
+    public String getDate(String query) {
+        String date = "";
+        try {
+            Statement stm = BaseApp.connectDB().createStatement();
+            ResultSet result = stm.executeQuery(query);
+            result.first();
+            date = result.getString("order_create_at");
+            return date;
+
+        } catch (Exception e) {
+        }
+        return date;
+    }
+
 }
